@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body{
+        /*margin: 0;
+        padding: 0;*/
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+      }
+      #container{
+        display: flex;
+      }
+      #navbar{
+        background-color: black;
+        color: #Fff;
+        display: flex;
+        justify-content: space-around;
+        padding: 20px;
+      }
+      input{
+        /*width: 400px;*/
+        padding: 5px;
+        border-radius: 10px;
+        outline: none;
+      }
+      #main{
+        max-width: 1200px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 5%;
+      }
+      #main > div{
+        width: 100%;
+        height: auto;
+        margin: 0;
+        padding: 0;
+        /*border: 2px solid black;*/
+      }
+      img{
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+      }
+      p{
+        display: none;
+      }
+    </style>
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div id="sidebar">
+        <!--DO NOT CHANGE THIS ID's-->
+        <!--Append the horizontal navbar(sidebar) here only-->
+      </div>
+
+      <div id="main">
+        <!--DO NOT CHANGE THIS ID's-->
+        <!--Append top images here only-->
+      </div>
+    </div>
+  </body>
+</html>
+<script type="module">
+  import sidebar from "./components/sidebar.js";
+  //console.log("sidebar:", sidebar);
+  import {makeApi,appendPictures} from "./scripts/main.js";
+
+  let sidebar_div = document.querySelector("#sidebar");
+  sidebar_div.innerHTML = sidebar();
+
+  //data
+  let url = "https://api.unsplash.com/photos/?client_id=D8FZWnfrJO8EixXYkwSm7BTMmvq5FdeWN9WwkHKC7ck";
+  let image_data = await makeApi(url);
+  console.log(image_data);
+
+  let parent = document.querySelector("#main");
+  appendPictures(image_data, parent);
+
+  let input = document.getElementById("searchbar");
+  input.addEventListener("keypress", (e)=>{
+    if(e.key === "Enter"){
+      let input_value = document.querySelector("#searchbar").value;
+
+      localStorage.setItem("search_term", input_value);
+      window.location.href = "search.html";
+    }
+  });
+
+  
+</script>
+<!-- access lay - D8FZWnfrJO8EixXYkwSm7BTMmvq5FdeWN9WwkHKC7ck -->
+<!-- secret kay - RHxotACpM3B12A7_t1Mj_cWZqs_t9amBXYq7E49nAKc -->
